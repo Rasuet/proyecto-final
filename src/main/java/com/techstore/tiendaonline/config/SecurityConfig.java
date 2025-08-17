@@ -37,7 +37,7 @@ public class SecurityConfig {
                 .maximumSessions(1)
                 .maxSessionsPreventsLogin(false)
             )
-            .headers(headers -> headers.frameOptions().disable()); // Para H2 Console
+                .headers(headers -> headers.disable()); // Para H2 Console
 
         return http.build();
     }

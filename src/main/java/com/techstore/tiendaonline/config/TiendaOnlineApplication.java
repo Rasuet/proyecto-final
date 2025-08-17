@@ -1,4 +1,4 @@
-package com.techstore.tiendaonline;
+package com.techstore.tiendaonline.config;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -3,897 +3,390 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda Online - TechStore</title>
+    <title>TechStore - Tienda Online</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        /* Utilidades */
+        .hidden { display: none !important; }
+        .page { display: none; }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
-        }
+        /* Animación suave de entrada */
+        .page.active { animation: fadeIn 0.4s ease-out; }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+        /* CORRECCIÓN IMPORTANTE PARA EL LOGIN:
+           Forzamos 'display: flex' cuando el login está activo para que el centrado funcione.
+           Sin esto, la regla genérica 'display: block' rompe el diseño. */
+        #login.active { display: flex !important; }
 
-        /* Header */
-        header {
-            background-color: #2c3e50;
-            color: white;
-            padding: 1rem 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
+        /* Regla general para el resto de páginas */
+        .page:not(#login).active { display: block; }
 
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        /* Navigation */
-        nav {
-            background-color: #34495e;
-            padding: 0.5rem 0;
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-menu a {
-            color: white;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-
-        .nav-menu a:hover,
-        .nav-menu a.active {
-            background-color: #3498db;
-        }
-
-        /* Main Content */
-        main {
-            padding: 2rem 0;
-            min-height: calc(100vh - 200px);
-        }
-
-        .page {
-            display: none;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        /* Login Form */
-        .login-container {
-            max-width: 400px;
-            margin: 2rem auto;
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-
-        .btn {
-            background-color: #3498db;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #2980b9;
-        }
-
-        .btn-danger {
-            background-color: #e74c3c;
-        }
-
-        .btn-danger:hover {
-            background-color: #c0392b;
-        }
-
-        .btn-success {
-            background-color: #27ae60;
-        }
-
-        .btn-success:hover {
-            background-color: #229954;
-        }
-
-        /* Products Grid */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .product-card {
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .product-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .product-info {
-            padding: 1.5rem;
-        }
-
-        .product-name {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .product-description {
-            color: #666;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-        }
-
-        .product-price {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #27ae60;
-            margin-bottom: 1rem;
-        }
-
-        /* Cart */
-        .cart-item {
-            background: white;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .cart-item-info {
-            flex: 1;
-        }
-
-        .cart-item-controls {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .quantity-input {
-            width: 60px;
-            text-align: center;
-        }
-
-        .cart-total {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-top: 2rem;
-            text-align: right;
-        }
-
-        /* Tables */
-        .table {
-            width: 100%;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .table th,
-        .table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-
-        .table th {
-            background-color: #f8f9fa;
-            font-weight: 600;
-        }
-
-        .table tr:hover {
-            background-color: #f8f9fa;
-        }
-
-        /* Status badges */
-        .status-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .status-creado {
-            background-color: #fff3cd;
-            color: #856404;
-        }
-
-        .status-confirmado {
-            background-color: #d4edda;
-            color: #155724;
-        }
-
-        .status-en-transporte {
-            background-color: #cce5ff;
-            color: #004085;
-        }
-
-        .status-entregado {
-            background-color: #d1ecf1;
-            color: #0c5460;
-        }
-
-        /* Alerts */
-        .alert {
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-radius: 4px;
-        }
-
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .alert-error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        /* Loading */
-        .loading {
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .nav-menu {
-                flex-wrap: wrap;
-                gap: 1rem;
-            }
-
-            .products-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .cart-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-            }
-
-            .cart-item-controls {
-                width: 100%;
-                justify-content: space-between;
-            }
-        }
+        .status-badge { padding: 4px 8px; border-radius: 12px; font-size: 0.85em; font-weight: bold; }
+        .status-ACTIVO { background-color: #e0f2fe; color: #0369a1; }
+        .status-COMPLETADO { background-color: #dcfce7; color: #15803d; }
+        .menu-card:hover { transform: translateY(-5px); }
     </style>
 </head>
-<body>
-    <!-- Login Page -->
-    <div id="loginPage" class="page active">
-        <div class="login-container">
-            <h2 style="text-align: center; margin-bottom: 2rem;">TechStore - Iniciar Sesión</h2>
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="username">Usuario:</label>
-                    <input type="text" id="username" name="username" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Contraseña:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <button type="submit" class="btn" style="width: 100%;">Iniciar Sesión</button>
-            </form>
-            <div id="loginAlert" class="alert hidden"></div>
-            <div style="margin-top: 1rem; text-align: center; font-size: 0.9rem; color: #666;">
-                <p>Usuarios de prueba:</p>
-                <p><strong>cliente1</strong> / 123456</p>
-                <p><strong>cliente2</strong> / 123456</p>
+<body class="bg-gray-50 min-h-screen font-sans text-gray-800">
+
+<!-- ========================================== -->
+<!-- 1. PANTALLA DE LOGIN (DISEÑO MEJORADO)     -->
+<!-- ========================================== -->
+<!--
+     Cambios visuales:
+     - Fondo con degradado (bg-gradient-to-br).
+     - Efecto cristal en el contenedor (backdrop-blur).
+     - Bordes redondeados más suaves (rounded-2xl).
+-->
+<div id="login" class="page active fixed inset-0 bg-gradient-to-br from-blue-600 to-purple-700 flex items-center justify-center z-50 p-4">
+    <div class="bg-white/95 backdrop-blur-sm p-10 rounded-2xl shadow-2xl w-full max-w-md transform transition-all border border-white/20">
+        <div class="text-center mb-8">
+            <div class="inline-block p-3 rounded-full bg-blue-100 text-blue-600 mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+            </div>
+            <h1 class="text-3xl font-extrabold text-gray-800 mb-1">TechStore</h1>
+            <p class="text-gray-500 text-sm">Tu tecnología favorita, en un solo lugar.</p>
+        </div>
+
+        <form id="loginForm" class="space-y-5">
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1 ml-1">Usuario</label>
+                <input type="text" id="username" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition bg-gray-50 focus:bg-white" placeholder="Ej: cliente1" required>
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1 ml-1">Contraseña</label>
+                <input type="password" id="password" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition bg-gray-50 focus:bg-white" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold py-3.5 rounded-xl hover:from-blue-700 hover:to-blue-800 transition transform hover:scale-[1.02] shadow-lg">
+                Iniciar Sesión
+            </button>
+        </form>
+
+        <div class="mt-8 text-center">
+            <p class="text-xs text-gray-400 uppercase tracking-wide mb-2">Credenciales de Prueba</p>
+            <div class="inline-flex gap-2 text-sm font-mono bg-gray-100 px-4 py-2 rounded-lg text-gray-600">
+                <span>User: cliente1</span>
+                <span class="text-gray-300">|</span>
+                <span>Pass: 123456</span>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Main App -->
-    <div id="mainApp" class="page">
-        <header>
-            <div class="container">
-                <div class="header-content">
-                    <div class="logo">TechStore</div>
-                    <div class="user-info">
-                        <span id="welcomeMessage">Bienvenido</span>
-                        <button id="logoutBtn" class="btn btn-danger">Cerrar Sesión</button>
-                    </div>
+<!-- ========================================== -->
+<!-- 2. APP PRINCIPAL                           -->
+<!-- ========================================== -->
+<div id="mainApp" class="hidden flex flex-col h-screen">
+    <nav class="bg-white shadow-md fixed w-full z-20 top-0 h-16">
+        <div class="max-w-7xl mx-auto px-4 h-full flex justify-between items-center">
+                <span class="text-2xl font-black text-blue-600 mr-8 cursor-pointer tracking-tight flex items-center gap-2" onclick="mostrarVista('inicio')">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    TechStore
+                </span>
+            <div class="hidden md:flex space-x-1">
+                <a href="#" data-page="inicio" class="nav-link px-4 py-2 rounded-lg font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition">Inicio</a>
+                <a href="#" data-page="productos" class="nav-link px-4 py-2 rounded-lg font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition">Catálogo</a>
+                <a href="#" data-page="carrito" class="nav-link px-4 py-2 rounded-lg font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition">Carrito</a>
+                <a href="#" data-page="pedidos" class="nav-link px-4 py-2 rounded-lg font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition">Mis Pedidos</a>
+                <a href="#" data-page="perfil" class="nav-link px-4 py-2 rounded-lg font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition">Perfil</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <span id="welcomeMessage" class="text-sm font-bold text-gray-500 hidden sm:inline"></span>
+                <button id="logoutBtn" class="bg-red-50 text-red-600 border border-red-100 px-4 py-2 rounded-lg text-sm font-bold hover:bg-red-100 transition flex items-center gap-2">
+                    <span>Salir</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 pt-24 pb-12">
+        <div id="alertContainer" class="fixed top-20 right-4 z-50 w-80 space-y-2 pointer-events-none"></div>
+
+        <!-- INICIO -->
+        <div id="inicio" class="page">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-extrabold text-gray-900 mb-3">Bienvenido a tu Tienda</h2>
+                <p class="text-lg text-gray-500">Gestiona tus compras y perfil desde un solo lugar</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div onclick="mostrarVista('productos')" class="menu-card bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl cursor-pointer transition border border-gray-100 group">
+                    <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">📱</div>
+                    <h3 class="font-bold text-xl text-gray-800 mb-2">Catálogo</h3>
+                    <p class="text-sm text-gray-500">Explora los últimos productos tecnológicos.</p>
+                </div>
+                <div onclick="mostrarVista('carrito')" class="menu-card bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl cursor-pointer transition border border-gray-100 group">
+                    <div class="w-14 h-14 bg-green-100 text-green-600 rounded-xl flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">🛒</div>
+                    <h3 class="font-bold text-xl text-gray-800 mb-2">Carrito</h3>
+                    <p class="text-sm text-gray-500">Revisa y finaliza tus compras pendientes.</p>
+                </div>
+                <div onclick="mostrarVista('pedidos')" class="menu-card bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl cursor-pointer transition border border-gray-100 group">
+                    <div class="w-14 h-14 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">📦</div>
+                    <h3 class="font-bold text-xl text-gray-800 mb-2">Pedidos</h3>
+                    <p class="text-sm text-gray-500">Historial de compras y facturas.</p>
+                </div>
+                <div onclick="mostrarVista('perfil')" class="menu-card bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl cursor-pointer transition border border-gray-100 group">
+                    <div class="w-14 h-14 bg-yellow-100 text-yellow-600 rounded-xl flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">👤</div>
+                    <h3 class="font-bold text-xl text-gray-800 mb-2">Perfil</h3>
+                    <p class="text-sm text-gray-500">Gestiona tus datos personales.</p>
                 </div>
             </div>
-        </header>
+        </div>
 
-        <nav>
-            <div class="container">
-                <ul class="nav-menu">
-                    <li><a href="#" data-page="productos" class="nav-link active">Productos</a></li>
-                    <li><a href="#" data-page="carrito" class="nav-link">Mi Carrito</a></li>
-                    <li><a href="#" data-page="pedidos" class="nav-link">Mis Pedidos</a></li>
-                    <li><a href="#" data-page="facturas" class="nav-link">Mis Facturas</a></li>
-                    <li><a href="#" data-page="perfil" class="nav-link">Mi Perfil</a></li>
-                </ul>
+        <!-- PRODUCTOS -->
+        <div id="productos" class="page">
+            <h2 class="text-3xl font-bold mb-8 text-gray-800">Catálogo de Productos</h2>
+            <div id="productosGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <p class="text-center text-gray-500 col-span-full py-10">Cargando productos...</p>
             </div>
-        </nav>
+        </div>
 
-        <main>
-            <div class="container">
-                <!-- Productos Page -->
-                <div id="productosPage" class="page active">
-                    <h2>Productos Disponibles</h2>
-                    <div id="productosGrid" class="products-grid">
-                        <div class="loading">Cargando productos...</div>
-                    </div>
+        <!-- CARRITO -->
+        <div id="carrito" class="page">
+            <h2 class="text-3xl font-bold mb-8 text-gray-800">Tu Carrito</h2>
+            <div class="flex flex-col lg:flex-row gap-8">
+                <div class="flex-grow bg-white rounded-2xl shadow-sm border border-gray-100 p-6" id="carritoContent">
+                    <div class="text-center py-12"><div class="text-6xl mb-4 opacity-20">🛒</div><p class="text-gray-500">Tu carrito está vacío.</p></div>
                 </div>
-
-                <!-- Carrito Page -->
-                <div id="carritoPage" class="page">
-                    <h2>Mi Carrito</h2>
-                    <div id="carritoContent">
-                        <div class="loading">Cargando carrito...</div>
-                    </div>
-                </div>
-
-                <!-- Pedidos Page -->
-                <div id="pedidosPage" class="page">
-                    <h2>Mis Pedidos</h2>
-                    <div id="pedidosContent">
-                        <div class="loading">Cargando pedidos...</div>
-                    </div>
-                </div>
-
-                <!-- Facturas Page -->
-                <div id="facturasPage" class="page">
-                    <h2>Mis Facturas</h2>
-                    <div id="facturasContent">
-                        <div class="loading">Cargando facturas...</div>
-                    </div>
-                </div>
-
-                <!-- Perfil Page -->
-                <div id="perfilPage" class="page">
-                    <h2>Mi Perfil</h2>
-                    <div id="perfilContent">
-                        <div class="loading">Cargando perfil...</div>
-                    </div>
-                </div>
+                <div class="w-full lg:w-96" id="carritoResumen"></div>
             </div>
-        </main>
-    </div>
+        </div>
 
-    <script>
-        // Global variables
-        let currentUser = null;
-        let currentPage = 'productos';
+        <!-- PEDIDOS -->
+        <div id="pedidos" class="page">
+            <h2 class="text-3xl font-bold mb-8 text-gray-800">Historial de Pedidos</h2>
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">ID Pedido</th>
+                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Fecha</th>
+                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Estado</th>
+                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Total</th>
+                        <th class="px-6 py-4 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Acción</th>
+                    </tr>
+                    </thead>
+                    <tbody id="pedidosContent" class="bg-white divide-y divide-gray-200"></tbody>
+                </table>
+            </div>
+        </div>
 
-        // API functions
-        async function apiCall(endpoint, options = {}) {
-            const defaultOptions = {
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            };
-
-            const response = await fetch(`/api${endpoint}`, {
-                ...defaultOptions,
-                ...options,
-                headers: {
-                    ...defaultOptions.headers,
-                    ...options.headers
-                }
-            });
-
-            const data = await response.json();
-            
-            if (!response.ok) {
-                throw new Error(data.error || 'Error en la solicitud');
-            }
-
-            return data;
-        }
-
-        // Authentication
-        async function login(username, password) {
-            return await apiCall('/login', {
-                method: 'POST',
-                body: JSON.stringify({ username, password })
-            });
-        }
-
-        async function logout() {
-            return await apiCall('/logout', { method: 'POST' });
-        }
-
-        async function checkSession() {
-            return await apiCall('/session');
-        }
-
-        // Products
-        async function getProductos() {
-            return await apiCall('/productos');
-        }
-
-        // Cart/Orders
-        async function getPedidoActual() {
-            return await apiCall('/pedidos/actual');
-        }
-
-        async function agregarProductoCarrito(idProducto, cantidad = 1) {
-            return await apiCall('/pedidos/agregar-producto', {
-                method: 'POST',
-                body: JSON.stringify({ id_producto: idProducto, cantidad })
-            });
-        }
-
-        async function actualizarLineaPedido(idLinea, cantidad) {
-            return await apiCall('/pedidos/actualizar-linea', {
-                method: 'PUT',
-                body: JSON.stringify({ id_linea_pedido: idLinea, cantidad })
-            });
-        }
-
-        async function confirmarPedido() {
-            return await apiCall('/pedidos/confirmar', { method: 'POST' });
-        }
-
-        async function getPedidos() {
-            return await apiCall('/pedidos');
-        }
-
-        // Invoices
-        async function getFacturas() {
-            return await apiCall('/facturas');
-        }
-
-        // Profile
-        async function getPerfil() {
-            return await apiCall('/cliente/perfil');
-        }
-
-        async function actualizarPerfil(data) {
-            return await apiCall('/cliente/perfil', {
-                method: 'PUT',
-                body: JSON.stringify(data)
-            });
-        }
-
-        // UI functions
-        function showAlert(message, type = 'error', containerId = 'loginAlert') {
-            const alert = document.getElementById(containerId);
-            alert.className = `alert alert-${type}`;
-            alert.textContent = message;
-            alert.classList.remove('hidden');
-            
-            setTimeout(() => {
-                alert.classList.add('hidden');
-            }, 5000);
-        }
-
-        function showPage(pageId) {
-            // Hide all pages
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            
-            // Show selected page
-            document.getElementById(pageId).classList.add('active');
-            
-            // Update navigation
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            
-            const activeLink = document.querySelector(`[data-page="${pageId.replace('Page', '')}"]`);
-            if (activeLink) {
-                activeLink.classList.add('active');
-            }
-            
-            currentPage = pageId.replace('Page', '');
-            loadPageContent();
-        }
-
-        function formatPrice(price) {
-            return new Intl.NumberFormat('es-ES', {
-                style: 'currency',
-                currency: 'EUR'
-            }).format(price);
-        }
-
-        function formatDate(dateString) {
-            return new Date(dateString).toLocaleDateString('es-ES');
-        }
-
-        // Page content loaders
-        async function loadProductos() {
-            try {
-                const productos = await getProductos();
-                const grid = document.getElementById('productosGrid');
-                
-                if (productos.length === 0) {
-                    grid.innerHTML = '<p>No hay productos disponibles.</p>';
-                    return;
-                }
-                
-                grid.innerHTML = productos.map(producto => `
-                    <div class="product-card">
-                        <img src="${producto.ruta_imagen}" alt="${producto.nombre}" class="product-image" onerror="this.src='/images/placeholder.jpg'">
-                        <div class="product-info">
-                            <div class="product-name">${producto.nombre}</div>
-                            <div class="product-description">${producto.descripcion || ''}</div>
-                            <div class="product-price">${formatPrice(producto.precio)}</div>
-                            <button class="btn" onclick="addToCart('${producto.id_producto}')">
-                                Añadir al Carrito
-                            </button>
-                        </div>
+        <!-- PERFIL -->
+        <div id="perfil" class="page">
+            <h2 class="text-3xl font-bold mb-8 text-gray-800">Mi Perfil</h2>
+            <div class="bg-white rounded-2xl shadow-lg p-8 max-w-3xl mx-auto border border-gray-100">
+                <div class="flex justify-between items-center mb-8 pb-4 border-b border-gray-100">
+                    <h3 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                        <span class="bg-blue-100 text-blue-600 p-2 rounded-lg">👤</span> Datos Personales
+                    </h3>
+                    <button onclick="toggleEdit(true)" id="btnEditar" class="text-blue-600 hover:text-blue-800 font-bold text-sm bg-blue-50 px-4 py-2 rounded-lg transition">✏️ Editar</button>
+                </div>
+                <form id="perfilForm" class="space-y-6">
+                    <div id="perfilContent" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+                    <div id="editActions" class="hidden flex gap-4 pt-6 border-t border-gray-100">
+                        <button type="button" onclick="toggleEdit(false)" class="flex-1 bg-gray-100 text-gray-600 py-3 rounded-xl font-bold hover:bg-gray-200 transition">Cancelar</button>
+                        <button type="submit" class="flex-1 bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-md">Guardar Cambios</button>
                     </div>
-                `).join('');
-            } catch (error) {
-                document.getElementById('productosGrid').innerHTML = `<p>Error al cargar productos: ${error.message}</p>`;
-            }
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    // --- CONFIGURACIÓN ---
+    const API_BASE_URL = 'http://localhost:8080/api';
+
+    // --- API WRAPPER ---
+    async function apiCall(endpoint, method = 'GET', body = null) {
+        const options = { method, headers: { 'Content-Type': 'application/json' }, credentials: 'include' };
+        if (body) options.body = JSON.stringify(body);
+        try {
+            const res = await fetch(API_BASE_URL + endpoint, options);
+            if (res.status === 401) throw new Error('UNAUTHORIZED');
+            if (res.status === 204) return null;
+            if (!res.ok) { const e = await res.json().catch(()=>({})); throw new Error(e.message||`Error ${res.status}`); }
+            return await res.json();
+        } catch (error) { console.error("API Error:", error); throw error; }
+    }
+
+    // --- UTILIDADES ---
+    function formatPrice(p) { return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(p); }
+    function formatDate(d) { return d ? new Date(d).toLocaleDateString() + ' ' + new Date(d).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : '-'; }
+
+    function showAlert(msg, type='success') {
+        const container = document.getElementById('alertContainer');
+        const d = document.createElement('div');
+        const colors = type === 'success' ? 'bg-green-50 border-green-500 text-green-800' : 'bg-red-50 border-red-500 text-red-800';
+        d.className = `${colors} border-l-4 p-4 rounded-lg shadow-lg pointer-events-auto transform transition-all duration-300 ease-out translate-x-10 opacity-0 flex items-center gap-3`;
+        d.innerHTML = `<span class="text-xl">${type==='success'?'✅':'⚠️'}</span><p class="font-medium">${msg}</p>`;
+        container.appendChild(d);
+
+        requestAnimationFrame(() => d.classList.remove('translate-x-10', 'opacity-0'));
+        setTimeout(() => { d.classList.add('translate-x-10', 'opacity-0'); setTimeout(() => d.remove(), 300); }, 3000);
+    }
+
+    // --- NAVEGACIÓN ---
+    async function mostrarVista(id) {
+        const log = document.getElementById('login');
+        const app = document.getElementById('mainApp');
+
+        if (id === 'login') {
+            log.classList.remove('hidden'); log.classList.add('active'); app.classList.add('hidden'); return;
+        } else {
+            log.classList.remove('active'); log.classList.add('hidden'); app.classList.remove('hidden');
         }
 
-        async function loadCarrito() {
-            try {
-                const data = await getPedidoActual();
-                const content = document.getElementById('carritoContent');
-                
-                if (!data.pedido || data.lineas.length === 0) {
-                    content.innerHTML = '<p>Tu carrito está vacío.</p>';
-                    return;
-                }
-                
-                const lineasHtml = data.lineas.map(linea => `
-                    <div class="cart-item">
-                        <div class="cart-item-info">
-                            <div class="product-name">${linea.nombre_producto}</div>
-                            <div class="product-price">${formatPrice(linea.precio_unitario)}</div>
-                        </div>
-                        <div class="cart-item-controls">
-                            <input type="number" value="${linea.cantidad}" min="0" class="quantity-input" 
-                                   onchange="updateCartItem('${linea.id_linea_pedido}', this.value)">
-                            <div>${formatPrice(linea.subtotal)}</div>
-                            <button class="btn btn-danger" onclick="removeCartItem('${linea.id_linea_pedido}')">
-                                Eliminar
-                            </button>
-                        </div>
-                    </div>
-                `).join('');
-                
-                content.innerHTML = `
-                    ${lineasHtml}
-                    <div class="cart-total">
-                        <h3>Total: ${formatPrice(data.pedido.total)}</h3>
-                        <button class="btn btn-success" onclick="confirmOrder()" style="margin-top: 1rem;">
-                            Confirmar Pedido
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        const target = document.getElementById(id);
+        if(target) target.classList.add('active');
+
+        document.querySelectorAll('.nav-link').forEach(l => {
+            const active = l.dataset.page === id;
+            l.classList.toggle('text-blue-600', active);
+            l.classList.toggle('bg-blue-50', active);
+            l.classList.toggle('text-gray-600', !active);
+        });
+
+        try {
+            if (id === 'productos') await renderProductos();
+            if (id === 'carrito') await renderCarrito();
+            if (id === 'pedidos') await renderPedidos();
+            if (id === 'perfil') { await renderPerfil(); toggleEdit(false); }
+        } catch (e) { if (e.message === 'UNAUTHORIZED') mostrarVista('login'); }
+    }
+
+    // --- RENDERIZADORES ---
+    async function renderProductos() {
+        const list = await apiCall('/productos') || [];
+        const grid = document.getElementById('productosGrid');
+
+        if (!list.length) { grid.innerHTML = '<p class="col-span-full text-center py-10 text-gray-500">No hay productos disponibles.</p>'; return; }
+
+        grid.innerHTML = list.map(p => `
+            <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden group flex flex-col">
+                <div class="h-56 bg-gray-100 relative overflow-hidden">
+                    <img src="${p.rutaImagen}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/400x300?text=Producto'">
+                    <span class="absolute top-3 right-3 bg-white/90 backdrop-blur px-3 py-1 text-xs font-bold rounded-full shadow-sm text-gray-700">Stock: ${p.stock}</span>
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <h3 class="font-bold text-xl text-gray-800 mb-2">${p.nombre}</h3>
+                    <p class="text-sm text-gray-500 mb-6 flex-grow leading-relaxed">${p.descripcion}</p>
+                    <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+                        <span class="text-2xl font-bold text-blue-600">${formatPrice(p.precio)}</span>
+                        <button onclick="addToCart(${p.id})" class="bg-blue-600 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-blue-700 transition shadow-md hover:shadow-lg active:scale-95">
+                            Añadir +
                         </button>
                     </div>
-                `;
-            } catch (error) {
-                document.getElementById('carritoContent').innerHTML = `<p>Error al cargar carrito: ${error.message}</p>`;
-            }
+                </div>
+            </div>`).join('');
+    }
+
+    async function renderCarrito() {
+        const p = await apiCall('/pedidos/activo');
+        const c = document.getElementById('carritoContent'); const r = document.getElementById('carritoResumen');
+
+        if (!p || !p.lineasPedido.length) {
+            c.innerHTML = '<div class="text-center py-16"><div class="text-6xl mb-4 opacity-20">🛒</div><p class="text-gray-500 text-lg">Tu carrito está vacío.</p><button onclick="mostrarVista(\'productos\')" class="mt-4 text-blue-600 font-bold hover:underline">Ir al Catálogo</button></div>';
+            r.innerHTML = ''; return;
         }
 
-        async function loadPedidos() {
-            try {
-                const pedidos = await getPedidos();
-                const content = document.getElementById('pedidosContent');
-                
-                if (pedidos.length === 0) {
-                    content.innerHTML = '<p>No tienes pedidos realizados.</p>';
-                    return;
-                }
-                
-                const tableHtml = `
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>ID Pedido</th>
-                                <th>Fecha</th>
-                                <th>Estado</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${pedidos.map(pedido => `
-                                <tr>
-                                    <td>${pedido.id_pedido.substring(0, 8)}...</td>
-                                    <td>${formatDate(pedido.fecha_pedido)}</td>
-                                    <td><span class="status-badge status-${pedido.estado}">${pedido.estado}</span></td>
-                                    <td>${formatPrice(pedido.total)}</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                `;
-                
-                content.innerHTML = tableHtml;
-            } catch (error) {
-                document.getElementById('pedidosContent').innerHTML = `<p>Error al cargar pedidos: ${error.message}</p>`;
-            }
-        }
+        c.innerHTML = '<div class="space-y-4">' + p.lineasPedido.map(l => `
+            <div class="flex justify-between items-center p-5 bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition">
+                <div class="flex items-center gap-4">
+                    <div class="bg-blue-50 w-12 h-12 rounded-lg flex items-center justify-center text-blue-600 font-bold">${l.cantidad}x</div>
+                    <div>
+                        <h4 class="font-bold text-gray-800 text-lg">${l.nombreProducto}</h4>
+                        <p class="text-sm text-gray-500">${formatPrice(l.precioUnitario)} / ud</p>
+                    </div>
+                </div>
+                <span class="font-bold text-xl text-gray-800">${formatPrice(l.subtotal)}</span>
+            </div>`).join('') + '</div>';
 
-        async function loadFacturas() {
-            try {
-                const facturas = await getFacturas();
-                const content = document.getElementById('facturasContent');
-                
-                if (facturas.length === 0) {
-                    content.innerHTML = '<p>No tienes facturas generadas.</p>';
-                    return;
-                }
-                
-                const tableHtml = `
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>ID Factura</th>
-                                <th>Fecha</th>
-                                <th>Importe</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${facturas.map(factura => `
-                                <tr>
-                                    <td>${factura.id_factura.substring(0, 8)}...</td>
-                                    <td>${formatDate(factura.fecha_factura)}</td>
-                                    <td>${formatPrice(factura.importe_total)}</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                `;
-                
-                content.innerHTML = tableHtml;
-            } catch (error) {
-                document.getElementById('facturasContent').innerHTML = `<p>Error al cargar facturas: ${error.message}</p>`;
-            }
-        }
+        r.innerHTML = `
+            <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-lg sticky top-24">
+                <h3 class="text-lg font-bold text-gray-800 mb-6">Resumen</h3>
+                <div class="flex justify-between text-2xl font-black mb-8 pt-4 border-t border-gray-100">
+                    <span>Total</span><span class="text-blue-600">${formatPrice(p.total)}</span>
+                </div>
+                <button onclick="confirmOrder()" class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-xl font-bold hover:from-green-600 hover:to-green-700 shadow-lg transition transform hover:-translate-y-1">
+                    Confirmar y Pagar
+                </button>
+                <p class="text-xs text-center text-gray-400 mt-4">Pago seguro con TechStore</p>
+            </div>`;
+    }
 
-        async function loadPerfil() {
-            try {
-                const perfil = await getPerfil();
-                const content = document.getElementById('perfilContent');
-                
-                content.innerHTML = `
-                    <form id="perfilForm" style="max-width: 600px;">
-                        <div class="form-group">
-                            <label for="nombre">Nombre:</label>
-                            <input type="text" id="nombre" name="nombre" value="${perfil.nombre}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="apellidos">Apellidos:</label>
-                            <input type="text" id="apellidos" name="apellidos" value="${perfil.apellidos}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input type="email" id="email" name="email" value="${perfil.email}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="telefono">Teléfono:</label>
-                            <input type="tel" id="telefono" name="telefono" value="${perfil.telefono || ''}">
-                        </div>
-                        <div class="form-group">
-                            <label for="direccion">Dirección:</label>
-                            <textarea id="direccion" name="direccion" rows="3" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px;">${perfil.direccion}</textarea>
-                        </div>
-                        <button type="submit" class="btn">Actualizar Perfil</button>
-                    </form>
-                    <div id="perfilAlert" class="alert hidden" style="margin-top: 1rem;"></div>
-                `;
-                
-                document.getElementById('perfilForm').addEventListener('submit', handlePerfilUpdate);
-            } catch (error) {
-                document.getElementById('perfilContent').innerHTML = `<p>Error al cargar perfil: ${error.message}</p>`;
-            }
-        }
+    async function renderPedidos() {
+        const l = await apiCall('/pedidos') || [];
+        const tbody = document.getElementById('pedidosContent');
 
-        async function loadPageContent() {
-            switch (currentPage) {
-                case 'productos':
-                    await loadProductos();
-                    break;
-                case 'carrito':
-                    await loadCarrito();
-                    break;
-                case 'pedidos':
-                    await loadPedidos();
-                    break;
-                case 'facturas':
-                    await loadFacturas();
-                    break;
-                case 'perfil':
-                    await loadPerfil();
-                    break;
-            }
-        }
+        if (!l.length) { tbody.innerHTML = '<tr><td colspan="5" class="px-6 py-12 text-center text-gray-500">No has realizado pedidos aún.</td></tr>'; return; }
 
-        // Event handlers
-        async function addToCart(productId) {
-            try {
-                await agregarProductoCarrito(productId);
-                showAlert('Producto añadido al carrito', 'success', 'productAlert');
-            } catch (error) {
-                showAlert(error.message, 'error', 'productAlert');
-            }
-        }
+        tbody.innerHTML = l.map(p => `
+            <tr class="hover:bg-blue-50/50 transition duration-200 group">
+                <td class="px-6 py-4 text-sm font-mono text-gray-500">#${p.id}</td>
+                <td class="px-6 py-4 text-sm text-gray-700">${formatDate(p.fechaPedido)}</td>
+                <td class="px-6 py-4"><span class="status-badge status-${p.estado}">${p.estado}</span></td>
+                <td class="px-6 py-4 text-sm font-bold text-gray-900">${formatPrice(p.total)}</td>
+                <td class="px-6 py-4 text-right">
+                    <button onclick="verFactura(${p.id})" class="text-blue-600 hover:text-blue-800 font-bold text-sm bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition">
+                        📄 Factura
+                    </button>
+                </td>
+            </tr>`).join('');
+    }
 
-        async function updateCartItem(lineaId, cantidad) {
-            try {
-                await actualizarLineaPedido(lineaId, parseInt(cantidad));
-                await loadCarrito();
-            } catch (error) {
-                showAlert(error.message, 'error', 'cartAlert');
-            }
-        }
+    async function renderPerfil() {
+        const p = await apiCall('/clientes/perfil'); if(!p) return;
+        const f = (l,i,v) => `<div><label class="block text-xs font-bold text-gray-500 uppercase mb-2 tracking-wide">${l}</label><input id="${i}" value="${v||''}" disabled class="w-full p-3.5 border border-gray-200 rounded-xl bg-gray-50 text-gray-700 font-medium focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition disabled:opacity-70 disabled:cursor-not-allowed"></div>`;
+        document.getElementById('perfilContent').innerHTML = f('Nombre','pName',p.nombre)+f('Apellidos','pLast',p.apellidos)+f('Dirección','pDir',p.direccion)+f('Teléfono','pTel',p.telefono);
+    }
 
-        async function removeCartItem(lineaId) {
-            try {
-                await actualizarLineaPedido(lineaId, 0);
-                await loadCarrito();
-            } catch (error) {
-                showAlert(error.message, 'error', 'cartAlert');
-            }
-        }
+    function toggleEdit(e){
+        document.querySelectorAll('#perfilContent input').forEach(i=>{ i.disabled=!e; i.classList.toggle('bg-white',e); i.classList.toggle('bg-gray-50',!e); });
+        document.getElementById('editActions').classList.toggle('hidden',!e); document.getElementById('btnEditar').classList.toggle('hidden',e);
+    }
 
-        async function confirmOrder() {
-            try {
-                await confirmarPedido();
-                showAlert('Pedido confirmado exitosamente', 'success', 'cartAlert');
-                setTimeout(() => {
-                    showPage('pedidosPage');
-                }, 2000);
-            } catch (error) {
-                showAlert(error.message, 'error', 'cartAlert');
-            }
-        }
+    async function verFactura(id) {
+        try {
+            const f = await apiCall(`/facturas/pedido/${id}`);
+            alert(`🧾 FACTURA #${f.id}\n\n📅 Fecha: ${formatDate(f.fechaEmision)}\n💰 Total: ${formatPrice(f.total)}\n\nEstado: Pagado`);
+        } catch(e) { showAlert("No se pudo obtener la factura", "error"); }
+    }
 
-        async function handlePerfilUpdate(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(e.target);
-            const data = Object.fromEntries(formData.entries());
-            
-            try {
-                await actualizarPerfil(data);
-                showAlert('Perfil actualizado correctamente', 'success', 'perfilAlert');
-            } catch (error) {
-                showAlert(error.message, 'error', 'perfilAlert');
-            }
-        }
+    window.addToCart = async (id) => { try { await apiCall('/pedidos/agregar', 'POST', {idProducto: id, cantidad: 1}); showAlert('Producto añadido al carrito'); } catch(e) { showAlert(e.message, 'error'); } };
+    window.confirmOrder = async () => { if(confirm('¿Confirmar compra?')) { try { await apiCall('/pedidos/confirmar', 'POST'); showAlert('¡Pedido realizado con éxito!'); mostrarVista('inicio'); } catch(e) { showAlert(e.message, 'error'); } } };
 
-        // Initialize app
-        document.addEventListener('DOMContentLoaded', async function() {
-            // Check if user is already logged in
-            try {
-                const session = await checkSession();
-                if (session.authenticated) {
-                    currentUser = session.user;
-                    document.getElementById('welcomeMessage').textContent = `Bienvenido, ${currentUser.cliente?.nombre || currentUser.username}`;
-                    showPage('mainApp');
-                    await loadPageContent();
-                }
-            } catch (error) {
-                console.log('No active session');
-            }
+    document.getElementById('perfilForm').addEventListener('submit', async (e) => { e.preventDefault(); try { await apiCall('/clientes/perfil', 'PUT', { nombre: document.getElementById('pName').value, apellidos: document.getElementById('pLast').value, direccion: document.getElementById('pDir').value, telefono: document.getElementById('pTel').value }); showAlert('Perfil actualizado correctamente'); toggleEdit(false); } catch(e) { showAlert(e.message, 'error'); } });
 
-            // Login form handler
-            document.getElementById('loginForm').addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
-                
-                try {
-                    const response = await login(username, password);
-                    currentUser = response.user;
-                    document.getElementById('welcomeMessage').textContent = `Bienvenido, ${currentUser.cliente?.nombre || currentUser.username}`;
-                    showPage('mainApp');
-                    await loadPageContent();
-                } catch (error) {
-                    showAlert(error.message);
-                }
-            });
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        try {
+            const res = await apiCall('/login', 'POST', { username: document.getElementById('username').value, password: document.getElementById('password').value });
+            document.getElementById('welcomeMessage').textContent = `Hola, ${res.username}`;
+            document.getElementById('loginForm').reset();
+            mostrarVista('inicio');
+        } catch(e) { alert('Usuario o contraseña incorrectos'); }
+    });
 
-            // Logout handler
-            document.getElementById('logoutBtn').addEventListener('click', async function() {
-                try {
-                    await logout();
-                    currentUser = null;
-                    showPage('loginPage');
-                    document.getElementById('loginForm').reset();
-                } catch (error) {
-                    console.error('Logout error:', error);
-                }
-            });
+    document.getElementById('logoutBtn').addEventListener('click', async () => { await apiCall('/logout', 'POST'); window.location.reload(); });
+    document.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', (e) => { e.preventDefault(); mostrarVista(l.dataset.page); }));
 
-            // Navigation handlers
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const page = this.getAttribute('data-page');
-                    showPage(page + 'Page');
-                });
-            });
-        });
-    </script>
+    // --- INICIALIZACIÓN ---
+    (async () => {
+        try {
+            // Añadimos timestamp para evitar caché agresiva del navegador
+            const s = await apiCall('/session?t='+Date.now());
+            if(s && s.authenticated) {
+                document.getElementById('welcomeMessage').textContent = `Hola, ${s.user.username}`;
+                mostrarVista('inicio');
+            } else mostrarVista('login');
+        } catch { mostrarVista('login'); }
+    })();
+</script>
 </body>
 </html>
-

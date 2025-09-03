@@ -444,13 +444,42 @@
         let currentPage = 'productos';
 
         // API functions
+        const API_BASE_URL = 'http://localhost:8080/api';
         async function apiCall(endpoint, options = {}) {
-            const defaultOptions = {
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            };
+        const defaultOptions = {
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+        }
+        };
+
+        // Combina opciones por defecto con las que se pasan
+         const finalOptions = {
+         ...defaultOptions,
+         ...options,
+         headers: {
+            ...defaultOptions.headers,
+            ...(options.headers || {})
+        }
+        };
+
+        try {
+        const response = await fetch(`${API_BASE_URL}${endpoint}`, finalOptions);
+
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+            return await response.json();
+        } else {
+            const text = await response.text();
+            throw new Error(`Respuesta inesperada del servidor: ${text}`);
+        }
+       } catch (error) {
+        console.error('Error en apiCall:', error);
+        throw error;
+          }
+        }
+
+
 
             const response = await fetch(`/api${endpoint}`, {
                 ...defaultOptions,

@@ -923,6 +923,45 @@
             });
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const loginForm = document.getElementById('loginForm');
+            const alertBox = document.getElementById('loginAlert');
+
+            loginForm.addEventListener('submit', async function (e) {
+                e.preventDefault(); // Evita que el formulario recargue la página
+
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+
+                try {
+                    const response = await fetch('http://localhost:8080/api/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ username, password })
+                    });
+
+                    const data = await response.json();
+
+                    alertBox.classList.remove('hidden');
+                    alertBox.textContent = data.message;
+                    alertBox.style.color = response.ok ? 'green' : 'red';
+
+                    if (response.ok) {
+                        // Aquí puedes ocultar el login y mostrar la app principal
+                        document.getElementById('loginPage').classList.remove('active');
+                        document.getElementById('mainApp').classList.add('active');
+                    }
+                } catch (error) {
+                    alertBox.classList.remove('hidden');
+                    alertBox.textContent = 'Error de conexión con el servidor';
+                    alertBox.style.color = 'red';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
 

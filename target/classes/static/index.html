@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Online - TechStore</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: #34495e;
+            padding: 0.5rem 0;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            background-color: #3498db;
+        }
+        #loginPage {
+           display: none;
+        }
+
+        #loginPage.active {
+          display: block;
+        }
+         #mainApp {
+          display: none;
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 0;
+            min-height: calc(100vh - 200px);
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Login Form */
+        .login-container {
+            max-width: 400px;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .btn {
+            background-color: #3498db;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-danger {
+            background-color: #e74c3c;
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-success {
+            background-color: #27ae60;
+        }
+
+        .btn-success:hover {
+            background-color: #229954;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #27ae60;
+            margin-bottom: 1rem;
+        }
+
+        /* Cart */
+        .cart-item {
+            background: white;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .quantity-input {
+            width: 60px;
+            text-align: center;
+        }
+
+        .cart-total {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+            text-align: right;
+        }
+
+        /* Tables */
+        .table {
+            width: 100%;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .table th,
+        .table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+
+        .table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* Status badges */
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-creado {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-confirmado {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-en-transporte {
+            background-color: #cce5ff;
+            color: #004085;
+        }
+
+        .status-entregado {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+
+        /* Alerts */
+        .alert {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .cart-item-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+            #mainApp {
+            display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Login Page -->
+<div id="loginPage" class="active">
+    <div class="login-container">
+        <h2 style="text-align: center; margin-bottom: 2rem;">TechStore - Iniciar Sesión</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Usuario:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn" style="width: 100%;">Iniciar Sesión</button>
+        </form>
+        <div id="loginAlert" class="alert hidden"></div>
+        <div style="margin-top: 1rem; text-align: center; font-size: 0.9rem; color: #666;">
+            <p>Usuarios de prueba:</p>
+            <p><strong>cliente1</strong> / 123456</p>
+            <p><strong>cliente2</strong> / 123456</p>
+        </div>
+    </div>
+</div>
+
+<!-- Main App -->
+<div id="mainApp">
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">TechStore</div>
+                <div class="user-info">
+                    <span id="welcomeMessage">Bienvenido</span>
+                    <button id="logoutBtn" class="btn btn-danger">Cerrar Sesión</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul class="nav-menu">
+                <li><a href="#" data-page="productos" class="nav-link active">Productos</a></li>
+                <li><a href="#" data-page="carrito" class="nav-link">Mi Carrito</a></li>
+                <li><a href="#" data-page="pedidos" class="nav-link">Mis Pedidos</a></li>
+                <li><a href="#" data-page="facturas" class="nav-link">Mis Facturas</a></li>
+                <li><a href="#" data-page="perfil" class="nav-link">Mi Perfil</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <!-- Productos Page -->
+            <div id="productosPage" class="page">
+                <h2>Productos Disponibles</h2>
+                <div id="productosGrid" class="products-grid">
+                    <div class="loading">Cargando productos...</div>
+                </div>
+            </div>
+
+            <!-- Carrito Page -->
+            <div id="carritoPage" class="page">
+                <h2>Mi Carrito</h2>
+                <div id="carritoContent">
+                    <div class="loading">Cargando carrito...</div>
+                </div>
+            </div>
+
+            <!-- Pedidos Page -->
+            <div id="pedidosPage" class="page">
+                <h2>Mis Pedidos</h2>
+                <div id="pedidosContent">
+                    <div class="loading">Cargando pedidos...</div>
+                </div>
+            </div>
+
+            <!-- Facturas Page -->
+            <div id="facturasPage" class="page">
+                <h2>Mis Facturas</h2>
+                <div id="facturasContent">
+                    <div class="loading">Cargando facturas...</div>
+                </div>
+            </div>
+
+            <!-- Perfil Page -->
+            <div id="perfilPage" class="page">
+                <h2>Mi Perfil</h2>
+                <div id="perfilContent">
+                    <div class="loading">Cargando perfil...</div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                // Quitar clase 'active' de todos los enlaces
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+
+                // Ocultar todas las páginas
+                pages.forEach(page => page.classList.remove('active'));
+
+                // Mostrar la página seleccionada
+                const targetId = link.dataset.page + 'Page';
+                const targetPage = document.getElementById(targetId);
+                if (targetPage) {
+                    targetPage.classList.add('active');
+                } else {
+                    console.warn('No se encontró la página:', targetId);
+                }
+            });
+        });
+    });
+        // Global variables
+        let currentUser = null;
+        let currentPage = 'productos';
+
+        // API functions
+          const API_BASE_URL = 'http://localhost:8080/api';
+
+        async function apiCall(endpoint, options = {}) {
+        const defaultOptions = {
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+        };
+
+        const finalOptions = {
+        ...defaultOptions,
+        ...options,
+        headers: {
+            ...defaultOptions.headers,
+            ...(options.headers || {})
+         }
+         };
+
+        try {
+         const response = await fetch(`${API_BASE_URL}${endpoint}`, finalOptions);
+         const contentType = response.headers.get('content-type');
+
+         let data;
+         if (contentType && contentType.includes('application/json')) {
+            data = await response.json();
+         } else {
+            const text = await response.text();
+            throw new Error(`Respuesta inesperada del servidor: ${text}`);
+         }
+
+        if (!response.ok) {
+            throw new Error(data.error || `Error ${response.status}: ${response.statusText}`);
+        }
+
+          return data;
+      } catch (error) {
+        console.error('Error en apiCall:', error);
+        throw error;
+      }
+    }
+
+        // Authentication
+        async function login(username, password) {
+            return await apiCall('/login', {
+                method: 'POST',
+                body: JSON.stringify({ username, password })
+            });
+        }
+
+        async function logout() {
+            return await apiCall('/logout', { method: 'POST' });
+        }
+
+        async function checkSession() {
+        try {
+        const data = await apiCall('/session');
+        console.log('Sesión activa:', data.usuario);
+        mostrarVista('productos'); // o la vista que prefieras como inicio
+        } catch (error) {
+        console.log('No hay sesión activa');
+        mostrarVista('login');
+        }
+       }
+
+
+        // Products
+        async function getProductos() {
+            return await apiCall('/productos');
+        }
+
+        // Cart/Orders
+        async function getPedidoActual() {
+            return await apiCall('/pedidos/actual');
+        }
+
+        async function agregarProductoCarrito(idProducto, cantidad = 1) {
+            return await apiCall('/pedidos/agregar-producto', {
+                method: 'POST',
+                body: JSON.stringify({ id_producto: idProducto, cantidad })
+            });
+        }
+
+        async function actualizarLineaPedido(idLinea, cantidad) {
+            return await apiCall('/pedidos/actualizar-linea', {
+                method: 'PUT',
+                body: JSON.stringify({ id_linea_pedido: idLinea, cantidad })
+            });
+        }
+
+        async function confirmarPedido() {
+            return await apiCall('/pedidos/confirmar', { method: 'POST' });
+        }
+
+        async function getPedidos() {
+            return await apiCall('/pedidos');
+        }
+
+        // Invoices
+        async function getFacturas() {
+            return await apiCall('/facturas');
+        }
+
+        // Profile
+        async function getPerfil() {
+            return await apiCall('/cliente/perfil');
+        }
+
+        async function actualizarPerfil(data) {
+            return await apiCall('/cliente/perfil', {
+                method: 'PUT',
+                body: JSON.stringify(data)
+            });
+        }
+
+        // UI functions
+        function showAlert(message, type = 'error', containerId = 'loginAlert') {
+            const alert = document.getElementById(containerId);
+            alert.className = `alert alert-${type}`;
+            alert.textContent = message;
+            alert.classList.remove('hidden');
+
+            setTimeout(() => {
+                alert.classList.add('hidden');
+            }, 5000);
+        }
+     <script>
+
+        document.addEventListener('DOMContentLoaded', () => {
+         const navLinks = document.querySelectorAll('.nav-link');
+         const pages = document.querySelectorAll('main .page');
+
+    // ✅ Aquí defines la función
+    function mostrarVista(vista) {
+    const loginPage = document.getElementById('loginPage');
+    const mainApp = document.getElementById('mainApp');
+    const pages = document.querySelectorAll('.page');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    if (vista === 'login') {
+        loginPage.classList.add('active');
+        mainApp.style.display = 'none';
+        pages.forEach(p => p.classList.remove('active'));
+        navLinks.forEach(link => link.classList.remove('active'));
+    } else {
+        loginPage.classList.remove('active');
+        mainApp.style.display = 'block';
+
+        pages.forEach(p => p.classList.remove('active'));
+        const targetPage = document.getElementById(`${vista}Page`);
+        if (targetPage) {
+            targetPage.classList.add('active');
+        }
+
+        navLinks.forEach(link => link.classList.remove('active'));
+        const activeLink = document.querySelector(`[data-page="${vista}"]`);
+        if (activeLink) {
+            activeLink.classList.add('active');
+        }
+    }
+
+    currentPage = vista;
+    loadPageContent(); // si quieres que cargue contenido dinámico
+}
+
+    // ✅ Aquí usas la función en los enlaces de navegación
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const vista = link.dataset.page;
+            mostrarVista(vista);
+        });
+    });
+    checkSession();
+
+});
+</script>
+
+function mostrarVista(pageId) {
+// Hide all pages
+document.querySelectorAll('.page').forEach(page => {
+page.classList.remove('active');
+});
+
+// Show selected page
+document.getElementById(pageId).classList.add('active');
+
+// Update navigation
+document.querySelectorAll('.nav-link').forEach(link => {
+link.classList.remove('active');
+});
+
+const activeLink = document.querySelector(`[data-page="${pageId.replace('Page', '')}"]`);
+if (activeLink) {
+activeLink.classList.add('active');
+}
+
+currentPage = pageId.replace('Page', '');
+loadPageContent();
+}
+
+function formatPrice(price) {
+return new Into.NumberFormat('es-ES', {
+style: 'currency',
+currency: 'EUR'
+}).format(price);
+}
+
+function formatDate(dateString) {
+return new Date(dateString).toLocaleDateString('es-ES');
+}
+
+
+// Page content loaders
+async function loadProductos() {
+try {
+const productos = await getProductos();
+const grid = document.getElementById('productosGrid');
+
+if (productos.length === 0) {
+grid.innerHTML = '<p>No hay productos disponibles.</p>';
+return;
+}
+grid.innerHTML = productos.map(producto => `
+
+<div class="product-card">
+    <img src="${producto.ruta_imagen}" alt="${producto.nombre}" class="product-image"
+         onerror="this.src='/images/favicon.ico'">
+    <div class="product-info">
+        <div class="product-name">${producto.nombre}</div>
+        <div class="product-description">${producto.descripcion || ''}</div>
+        <div class="product-price">${formatPrice(producto.precio)}</div>
+        <button class="btn" onclick="addToCart('${producto.id_producto}')">
+            Añadir al Carrito
+        </button>
+    </div>
+</div>
+`).join('');
+} catch (error) {
+document.getElementById('productosGrid').innerHTML = `<p>Error al cargar productos: ${error.message}</p>`;
+}
+}
+
+async function loadCarrito() {
+try {
+const data = await getPedidoActual();
+const content = document.getElementById('carritoContent');
+
+if (!data.pedido || data.lineas.length === 0) {
+content.innerHTML = '<p>Tu carrito está vacío.</p>';
+return;
+}
+
+const lineasHtml = data.lineas.map(linea => `
+<div class="cart-item">
+    <div class="cart-item-info">
+        <div class="product-name">${linea.nombre_producto}</div>
+        <div class="product-price">${formatPrice(linea.precio_unitario)}</div>
+    </div>
+    <div class="cart-item-controls">
+        <input type="number" value="${linea.cantidad}" min="0" class="quantity-input"
+               onchange="updateCartItem('${linea.id_linea_pedido}', this.value)">
+        <div>${formatPrice(linea.subtotal)}</div>
+        <button class="btn btn-danger" onclick="removeCartItem('${linea.id_linea_pedido}')">
+            Eliminar
+        </button>
+    </div>
+</div>
+`).join('');
+
+content.innerHTML = `
+${lineasHtml}
+<div class="cart-total">
+    <h3>Total: ${formatPrice(data.pedido.total)}</h3>
+    <button class="btn btn-success" onclick="confirmOrder()" style="margin-top: 1rem;">
+        Confirmar Pedido
+    </button>
+</div>
+`;
+} catch (error) {
+document.getElementById('carritoContent').innerHTML = `<p>Error al cargar carrito: ${error.message}</p>`;
+}
+}
+
+async function loadPedidos() {
+try {
+const pedidos = await getPedidos();
+const content = document.getElementById('pedidosContent');
+
+if (pedidos.length === 0) {
+content.innerHTML = '<p>No tienes pedidos realizados.</p>';
+return;
+}
+
+const tableHtml = `
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID Pedido</th>
+        <th>Fecha</th>
+        <th>Estado</th>
+        <th>Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    ${pedidos.map(pedido => `
+    <tr>
+        <td>${pedido.id_pedido.substring(0, 8)}...</td>
+        <td>${formatDate(pedido.fecha_pedido)}</td>
+        <td><span class="status-badge status-${pedido.estado}">${pedido.estado}</span></td>
+        <td>${formatPrice(pedido.total)}</td>
+    </tr>
+    `).join('')}
+    </tbody>
+</table>
+`;
+
+content.innerHTML = tableHtml;
+} catch (error) {
+document.getElementById('pedidosContent').innerHTML = `<p>Error al cargar pedidos: ${error.message}</p>`;
+}
+}
+
+async function loadFacturas() {
+try {
+const facturas = await getFacturas();
+const content = document.getElementById('facturasContent');
+
+if (facturas.length === 0) {
+content.innerHTML = '<p>No tienes facturas generadas.</p>';
+return;
+}
+
+const tableHtml = `
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID Factura</th>
+        <th>Fecha</th>
+        <th>Importe</th>
+    </tr>
+    </thead>
+    <tbody>
+    ${facturas.map(factura => `
+    <tr>
+        <td>${factura.id_factura.substring(0, 8)}...</td>
+        <td>${formatDate(factura.fecha_factura)}</td>
+        <td>${formatPrice(factura.importe_total)}</td>
+    </tr>
+    `).join('')}
+    </tbody>
+</table>
+`;
+
+content.innerHTML = tableHtml;
+} catch (error) {
+document.getElementById('facturasContent').innerHTML = `<p>Error al cargar facturas: ${error.message}</p>`;
+}
+}
+
+async function loadPerfil() {
+try {
+const perfil = await getPerfil();
+const content = document.getElementById('perfilContent');
+
+content.innerHTML = `
+<form id="perfilForm" style="max-width: 600px;">
+    <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" value="${perfil.nombre}" required>
+    </div>
+    <div class="form-group">
+        <label for="apellidos">Apellidos:</label>
+        <input type="text" id="apellidos" name="apellidos" value="${perfil.apellidos}" required>
+    </div>
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="${perfil.email}" required>
+    </div>
+    <div class="form-group">
+        <label for="telefono">Teléfono:</label>
+        <input type="tel" id="telefono" name="telefono" value="${perfil.telefono || ''}">
+    </div>
+    <div class="form-group">
+        <label for="direccion">Dirección:</label>
+        <textarea id="direccion" name="direccion" rows="3"
+                  style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px;">${perfil.direccion}</textarea>
+    </div>
+    <button type="submit" class="btn">Actualizar Perfil</button>
+</form>
+<div id="perfilAlert" class="alert hidden" style="margin-top: 1rem;"></div>
+`;
+
+document.getElementById('perfilForm').addEventListener('submit', handlePerfilUpdate);
+} catch (error) {
+document.getElementById('perfilContent').innerHTML = `<p>Error al cargar perfil: ${error.message}</p>`;
+}
+}
+
+async function loadPageContent() {
+switch (currentPage) {
+case 'productos':
+await loadProductos();
+break;
+case 'carrito':
+await loadCarrito();
+break;
+case 'pedidos':
+await loadPedidos();
+break;
+case 'facturas':
+await loadFacturas();
+break;
+case 'perfil':
+await loadPerfil();
+break;
+}
+}
+
+// Event handlers
+async function addToCart(productId) {
+try {
+await agregarProductoCarrito(productId);
+showAlert('Producto añadido al carrito', 'success', 'productAlert');
+} catch (error) {
+showAlert(error.message, 'error', 'productAlert');
+}
+}
+
+async function updateCartItem(lineaId, cantidad) {
+try {
+await actualizarLineaPedido(lineaId, parseInt(cantidad));
+await loadCarrito();
+} catch (error) {
+showAlert(error.message, 'error', 'cartAlert');
+}
+}
+
+async function removeCartItem(lineaId) {
+try {
+await actualizarLineaPedido(lineaId, 0);
+await loadCarrito();
+} catch (error) {
+showAlert(error.message, 'error', 'cartAlert');
+}
+}
+
+async function confirmOrder() {
+try {
+await confirmarPedido();
+showAlert('Pedido confirmado exitosamente', 'success', 'cartAlert');
+setTimeout(() => {
+mostrarVista('pedidos');
+}, 2000);
+} catch (error) {
+showAlert(error.message, 'error', 'cartAlert');
+}
+}
+
+async function handlePerfilUpdate(e) {
+e.preventDefault();
+
+const formData = new FormData(e.target);
+const data = Object.fromEntries(formData.entries());
+
+try {
+await actualizarPerfil(data);
+showAlert('Perfil actualizado correctamente', 'success', 'perfilAlert');
+} catch (error) {
+showAlert(error.message, 'error', 'perfilAlert');
+}
+}
+
+// Initialize app
+document.addEventListener('DOMContentLoaded', async function() {
+// Check if user is already logged in
+try {
+const session = await checkSession();
+if (session.authenticated) {
+currentUser = session.user;
+document.getElementById('welcomeMessage').textContent = `Bienvenido, ${currentUser.cliente?.nombre ||
+currentUser.username}`;
+mostrarVista('productos');
+await loadPageContent();
+}
+} catch (error) {
+console.log('No active session');
+}
+
+// Login form handler
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
+e.preventDefault();
+
+const username = document.getElementById('username').value;
+const password = document.getElementById('password').value;
+
+try {
+const response = await login(username, password);
+currentUser = response.user;
+document.getElementById('welcomeMessage').textContent = `Bienvenido, ${currentUser.cliente?.nombre ||
+currentUser.username}`;
+mostrarVista('productos');
+await loadPageContent();
+} catch (error) {
+showAlert(error.message);
+}
+});
+
+// Logout handler
+document.getElementById('logoutBtn').addEventListener('click', async function() {
+try {
+await logout();
+currentUser = null;
+mostrarVista('login');
+document.getElementById('loginForm').reset();
+} catch (error) {
+console.error('Logout error:', error);
+}
+});
+
+  // Navigation handlers
+     document.querySelectorAll('.nav-link').forEach(link => {
+     link.addEventListener('click', function(e) {
+     e.preventDefault();
+     const page = this.getAttribute('data-page');
+     mostrarVista(page);
+     });
+   });
+});
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const loginForm = document.getElementById('loginForm');
+    const alertBox = document.getElementById('loginAlert');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    // Función centralizada para mostrar vistas
+   function mostrarVista(vista) {
+    const loginPage = document.getElementById('loginPage');
+    const mainApp = document.getElementById('mainApp');
+    const pages = document.querySelectorAll('.page');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    if (vista === 'login') {
+        loginPage.classList.add('active');
+        loginPage.style.display = 'block';
+        mainApp.style.display = 'none';
+        pages.forEach(p => p.classList.remove('active'));
+        navLinks.forEach(link => link.classList.remove('active'));
+    } else {
+        loginPage.classList.remove('active');
+        loginPage.style.display = 'none';
+        mainApp.style.display = 'block';
+
+        // Oculta todas las páginas
+        pages.forEach(p => p.classList.remove('active'));
+
+        // Muestra solo la página deseada
+        const targetPage = document.getElementById(`${vista}Page`);
+        if (targetPage) {
+            targetPage.classList.add('active');
+        }
+
+        // Actualiza navegación
+        navLinks.forEach(link => link.classList.remove('active'));
+        const activeLink = document.querySelector(`[data-page="${vista}"]`);
+        if (activeLink) {
+            activeLink.classList.add('active');
+        }
+    }
+
+    currentPage = vista;
+    loadPageContent();
+}
+    // Login
+    loginForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        try {
+            const response = await fetch('http://localhost:8080/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+
+            const data = await response.json();
+            alertBox.classList.remove('hidden');
+            alertBox.textContent = data.message;
+            alertBox.style.color = response.ok ? 'green' : 'red';
+
+            if (response.ok) {
+                mostrarVista('productos');
+            }
+        } catch (error) {
+            alertBox.classList.remove('hidden');
+            alertBox.textContent = 'Error de conexión con el servidor';
+            alertBox.style.color = 'red';
+        }
+    });
+
+    // Logout
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', async function () {
+            try {
+                await fetch('http://localhost:8080/api/logout', { method: 'POST' });
+            } catch (error) {
+                console.warn('Error al cerrar sesión:', error);
+            }
+
+            mostrarVista('login');
+            loginForm.reset();
+            alertBox.classList.add('hidden');
+            alertBox.textContent = '';
+        });
+    }
+
+    // Navegación
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const vista = link.dataset.page;
+            mostrarVista(vista);
+        });
+    });
+
+    // Verifica sesión al cargar
+    async function checkSession() {
+    try {
+        const response = await fetch('http://localhost:8080/api/session');
+        if (!response.ok) throw new Error('No hay sesión');
+
+        const data = await response.json();
+
+        if (data && data.authenticated) {
+            currentUser = data.user;
+            document.getElementById('welcomeMessage').textContent =
+                `Bienvenido, ${currentUser.cliente?.nombre || currentUser.username}`;
+            mostrarVista('productos');
+        } else {
+            throw new Error('Sesión no válida');
+        }
+    } catch (error) {
+        mostrarVista('login');
+    }
+}
+});
+</script>
+</body>
+</html>
+

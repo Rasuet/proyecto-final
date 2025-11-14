@@ -1,17 +1,31 @@
 package com.techstore.tiendaonline.entity;
 
+import com.techstore.tiendaonline.repository.ProductoRepository;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+
 import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
 @Table(name = "productos")
 public class Producto {
-    
+
+    @Bean
+    CommandLineRunner cargarProductos(ProductoRepository repo) {
+        return args -> {
+            if (repo.count() == 0) {
+                repo.save(new Producto("Teclado RGB", "Teclado mecánico con luces", new BigDecimal("49.99"), "/img/teclado.jpg"));
+                repo.save(new Producto("Ratón Gamer", "Ratón óptico de alta precisión", new BigDecimal("29.99"), "/img/raton.jpg"));
+                repo.save(new Producto("Monitor 4K", "Monitor UHD de 27 pulgadas", new BigDecimal("299.99"), "/img/monitor.jpg"));
+            }
+        };
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_producto")

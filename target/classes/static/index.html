@@ -344,7 +344,6 @@
 </head>
 <body>
     <!-- Login Page -->
-    <div id="loginPage" class="page active">
         <div class="login-container">
             <h2 style="text-align: center; margin-bottom: 2rem;">TechStore - Iniciar Sesión</h2>
             <form id="loginForm">
@@ -368,7 +367,6 @@
     </div>
 
     <!-- Main App -->
-    <div id="mainApp" class="page">
         <header>
             <div class="container">
                 <div class="header-content">
@@ -396,7 +394,6 @@
         <main>
             <div class="container">
                 <!-- Productos Page -->
-                <div id="productosPage" class="page active">
                     <h2>Productos Disponibles</h2>
                     <div id="productosGrid" class="products-grid">
                         <div class="loading">Cargando productos...</div>
@@ -449,11 +446,9 @@
         const defaultOptions = {
           credentials: 'include',
           headers: {
-            'Content-Type': 'application/json',
         }
         };
 
-        // Combina opciones por defecto con las que se pasan
          const finalOptions = {
          ...defaultOptions,
          ...options,
@@ -465,10 +460,8 @@
 
         try {
         const response = await fetch(`${API_BASE_URL}${endpoint}`, finalOptions);
-
         const contentType = response.headers.get('content-type');
         if (contentType && contentType.includes('application/json')) {
-            return await response.json();
         } else {
             const text = await response.text();
             throw new Error(`Respuesta inesperada del servidor: ${text}`);
@@ -477,26 +470,6 @@
         console.error('Error en apiCall:', error);
         throw error;
           }
-        }
-
-
-
-            const response = await fetch(`/api${endpoint}`, {
-                ...defaultOptions,
-                ...options,
-                headers: {
-                    ...defaultOptions.headers,
-                    ...options.headers
-                }
-            });
-
-            const data = await response.json();
-            
-            if (!response.ok) {
-                throw new Error(data.error || 'Error en la solicitud');
-            }
-
-            return data;
         }
 
         // Authentication
@@ -512,7 +485,6 @@
         }
 
         async function checkSession() {
-            return await apiCall('/session');
         }
 
         // Products
@@ -576,7 +548,6 @@
             }, 5000);
         }
 
-        function showPage(pageId) {
             // Hide all pages
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
@@ -600,7 +571,6 @@
         }
 
         function formatPrice(price) {
-            return new Intl.NumberFormat('es-ES', {
                 style: 'currency',
                 currency: 'EUR'
             }).format(price);
@@ -620,10 +590,8 @@
                     grid.innerHTML = '<p>No hay productos disponibles.</p>';
                     return;
                 }
-                
                 grid.innerHTML = productos.map(producto => `
                     <div class="product-card">
-                        <img src="${producto.ruta_imagen}" alt="${producto.nombre}" class="product-image" onerror="this.src='/images/placeholder.jpg'">
                         <div class="product-info">
                             <div class="product-name">${producto.nombre}</div>
                             <div class="product-description">${producto.descripcion || ''}</div>
@@ -781,7 +749,6 @@
                         </div>
                         <div class="form-group">
                             <label for="direccion">Dirección:</label>
-                            <textarea id="direccion" name="direccion" rows="3" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px;">${perfil.direccion}</textarea>
                         </div>
                         <button type="submit" class="btn">Actualizar Perfil</button>
                     </form>
@@ -847,7 +814,6 @@
                 await confirmarPedido();
                 showAlert('Pedido confirmado exitosamente', 'success', 'cartAlert');
                 setTimeout(() => {
-                    showPage('pedidosPage');
                 }, 2000);
             } catch (error) {
                 showAlert(error.message, 'error', 'cartAlert');
@@ -875,8 +841,6 @@
                 const session = await checkSession();
                 if (session.authenticated) {
                     currentUser = session.user;
-                    document.getElementById('welcomeMessage').textContent = `Bienvenido, ${currentUser.cliente?.nombre || currentUser.username}`;
-                    showPage('mainApp');
                     await loadPageContent();
                 }
             } catch (error) {
@@ -893,8 +857,6 @@
                 try {
                     const response = await login(username, password);
                     currentUser = response.user;
-                    document.getElementById('welcomeMessage').textContent = `Bienvenido, ${currentUser.cliente?.nombre || currentUser.username}`;
-                    showPage('mainApp');
                     await loadPageContent();
                 } catch (error) {
                     showAlert(error.message);
@@ -906,7 +868,6 @@
                 try {
                     await logout();
                     currentUser = null;
-                    showPage('loginPage');
                     document.getElementById('loginForm').reset();
                 } catch (error) {
                     console.error('Logout error:', error);
@@ -918,41 +879,30 @@
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     const page = this.getAttribute('data-page');
-                    showPage(page + 'Page');
                 });
             });
         });
-    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const loginForm = document.getElementById('loginForm');
             const alertBox = document.getElementById('loginAlert');
 
             loginForm.addEventListener('submit', async function (e) {
-                e.preventDefault(); // Evita que el formulario recargue la página
-
                 const username = document.getElementById('username').value;
                 const password = document.getElementById('password').value;
 
                 try {
                     const response = await fetch('http://localhost:8080/api/login', {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
                         body: JSON.stringify({ username, password })
                     });
 
                     const data = await response.json();
-
                     alertBox.classList.remove('hidden');
                     alertBox.textContent = data.message;
                     alertBox.style.color = response.ok ? 'green' : 'red';
 
                     if (response.ok) {
-                        // Aquí puedes ocultar el login y mostrar la app principal
-                        document.getElementById('loginPage').classList.remove('active');
-                        document.getElementById('mainApp').classList.add('active');
                     }
                 } catch (error) {
                     alertBox.classList.remove('hidden');

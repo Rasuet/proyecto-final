@@ -9,8 +9,3 @@ public class TiendaOnlineApplication {
     public static void main(String[] args) {
         SpringApplication.run(TiendaOnlineApplication.class, args);
     }
-
-
-
-
-}

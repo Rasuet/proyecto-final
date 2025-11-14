@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c7ad0e6d-4f89-43d0-8417-599ed5671751" name="Changes" comment="prueba2">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/TiendaOnlineApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/config/SeguridadConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/config/WebConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-    </list>
+    <list default="true" id="c7ad0e6d-4f89-43d0-8417-599ed5671751" name="Changes" comment="prueba3" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -65,11 +59,6 @@
     "settings.editor.selected.configurable": "configurable.group.language"
   }
 }]]></component>
-  <component name="QodanaReportsService">
-    <option name="descriptions">
-      <ReportDescription localRun="true" path="C:\Users\Usuario\AppData\Local\Temp\qodana_output\qodana.sarif.json" reportGuid="a3fe1ef6-2b5b-4d33-b30d-24f13f31422e" reportId="proyecto-finalprueba/qodana/2025-11-11" />
-    </option>
-  </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Usuario\IdeaProjects\proyecto-finalprueba\src\main\resources\static\images" />
@@ -116,7 +105,31 @@
       <option name="project" value="LOCAL" />
       <updated>1760365858064</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="prueba3">
+      <option name="closed" value="true" />
+      <created>1763116611128</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1763116611128</updated>
+    </task>
+    <task id="LOCAL-00004" summary="prueba3">
+      <option name="closed" value="true" />
+      <created>1763116750488</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1763116750488</updated>
+    </task>
+    <task id="LOCAL-00005" summary="prueba3">
+      <option name="closed" value="true" />
+      <created>1763116796050</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1763116796050</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -162,7 +175,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="prueba2" />
-    <option name="LAST_COMMIT_MESSAGE" value="prueba2" />
+    <MESSAGE value="prueba3" />
+    <option name="LAST_COMMIT_MESSAGE" value="prueba3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/proyecto_finalprueba$TiendaOnlineApplication.ic" NAME="TiendaOnlineApplication Coverage Results" MODIFIED="1762709454454" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">

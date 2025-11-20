@@ -1,21 +1,24 @@
 package com.techstore.tiendaonline.repository;
 
-import com.techstore.tiendaonline.entity.Cliente;
+
 import com.techstore.tiendaonline.entity.Factura;
-import com.techstore.tiendaonline.entity.Pedido;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import java.util.List;
+
 import java.util.Optional;
 
+/**
+ * Repositorio para la entidad Factura.
+ * Permite guardar y consultar las facturas generadas.
+ */
 @Repository
-public interface FacturaRepository extends JpaRepository<Factura, String> {
-    
-    Optional<Factura> findByPedido(Pedido pedido);
-    
-    @Query("SELECT f FROM Factura f WHERE f.pedido.cliente = :cliente ORDER BY f.fechaFactura DESC")
-    List<Factura> findByClienteOrderByFechaFacturaDesc(@Param("cliente") Cliente cliente);
-}
+public interface FacturaRepository extends JpaRepository<Factura, Long> {
 
+    /**
+     * Busca la factura asociada a un pedido específico.
+     * Útil para mostrar el detalle de compra al usuario (R3.1).
+     * * @param idPedido El ID del pedido.
+     * @return Un Optional que contiene la factura si existe.
+     */
+    Optional<Factura> findByPedidoId(Long idPedido);
+}

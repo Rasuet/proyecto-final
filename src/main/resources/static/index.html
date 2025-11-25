@@ -34,12 +34,6 @@
 <!-- ========================================== -->
 <!-- 1. PANTALLA DE LOGIN (DISEÑO MEJORADO)     -->
 <!-- ========================================== -->
-<!--
-     Cambios visuales:
-     - Fondo con degradado (bg-gradient-to-br).
-     - Efecto cristal en el contenedor (backdrop-blur).
-     - Bordes redondeados más suaves (rounded-2xl).
--->
 <div id="login" class="page active fixed inset-0 bg-gradient-to-br from-blue-600 to-purple-700 flex items-center justify-center z-50 p-4">
     <div class="bg-white/95 backdrop-blur-sm p-10 rounded-2xl shadow-2xl w-full max-w-md transform transition-all border border-white/20">
         <div class="text-center mb-8">
@@ -83,7 +77,10 @@
 <div id="mainApp" class="hidden flex flex-col h-screen">
     <nav class="bg-white shadow-md fixed w-full z-20 top-0 h-16">
         <div class="max-w-7xl mx-auto px-4 h-full flex justify-between items-center">
-                <span class="text-2xl font-black text-blue-600 mr-8 cursor-pointer tracking-tight flex items-center gap-2" onclick="mostrarVista('inicio')">
+            <!-- LOGO CON EFECTO HOVER BOX -->
+            <span class="text-2xl font-black text-blue-600 cursor-pointer tracking-tight flex items-center gap-2
+                      p-2 rounded-lg transition-all duration-200 hover:bg-gray-100 hover:shadow-md mr-8"
+                  onclick="mostrarVista('inicio')">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                     TechStore
                 </span>
@@ -150,7 +147,7 @@
             <h2 class="text-3xl font-bold mb-8 text-gray-800">Tu Carrito</h2>
             <div class="flex flex-col lg:flex-row gap-8">
                 <div class="flex-grow bg-white rounded-2xl shadow-sm border border-gray-100 p-6" id="carritoContent">
-                    <div class="text-center py-12"><div class="text-6xl mb-4 opacity-20">🛒</div><p class="text-gray-500">Tu carrito está vacío.</p></div>
+                    <div class="text-center py-16"><div class="text-6xl mb-4 opacity-20">🛒</div><p class="text-gray-500 text-lg">Tu carrito está vacío.</p><button onclick="mostrarVista('productos')" class="mt-4 text-blue-600 font-bold hover:underline">Ir al Catálogo</button></div>
                 </div>
                 <div class="w-full lg:w-96" id="carritoResumen"></div>
             </div>

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/clientes")
 public class ClienteController {
 
-    private final ClienteService clienteService;
+    private final com.techstore.tiendaonline.service.ClienteService clienteService;
     private final UsuarioRepository usuarioRepository;
 
     @Autowired
@@ -25,7 +25,6 @@ public class ClienteController {
 
     /**
      * Método auxiliar para obtener el cliente autenticado de forma segura.
-     * Usa la consulta 'findByUsernameWithCliente' para evitar errores de Lazy Initialization.
      */
     private Cliente getClienteAutenticado() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();

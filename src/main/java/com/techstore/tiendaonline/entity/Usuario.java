@@ -15,7 +15,7 @@ public class Usuario {
     @Column(unique = true, nullable = false)
     private String username;
 
-    // CORRECCIÓN: Usamos 'password' en lugar de 'passwordHash' para coincidir con DataInitializer
+
     @NotBlank
     @Column(nullable = false)
     private String password;

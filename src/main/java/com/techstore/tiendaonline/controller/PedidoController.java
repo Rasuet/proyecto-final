@@ -40,12 +40,16 @@ public class PedidoController {
     // --- MÉTODO DE CONVERSIÓN (Entidad -> DTO) ---
     private PedidoResponse mapToDTO(Pedido pedido) {
         PedidoResponse dto = new PedidoResponse();
+
+        // CRÍTICO: Aseguro que el pedido no sea nulo antes de acceder a sus métodos
+        if (pedido == null) return dto;
+
         dto.setId(pedido.getId());
         dto.setFechaPedido(pedido.getFechaPedido());
         dto.setEstado(pedido.getEstado());
         dto.setTotal(pedido.getTotal());
 
-        // Convertimos las líneas para evitar problemas de Lazy Loading en el JSON
+        // Convierto las líneas para evitar problemas de Lazy Loading en el JSON
         if (pedido.getLineasPedido() != null) {
             List<LineaPedidoDTO> lineasDTO = pedido.getLineasPedido().stream().map(linea ->
                     new LineaPedidoDTO(
@@ -74,14 +78,13 @@ public class PedidoController {
                 return ResponseEntity.noContent().build();
             }
 
-            // Convertimos la lista de Entidades a lista de DTOs
             List<PedidoResponse> historialDTOs = historialEntities.stream()
                     .map(this::mapToDTO)
                     .collect(Collectors.toList());
 
             return ResponseEntity.ok(historialDTOs);
         } catch (Exception e) {
-            e.printStackTrace(); // Imprimir error en consola para depurar
+            e.printStackTrace();
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -93,6 +96,7 @@ public class PedidoController {
             Pedido pedido = pedidoService.obtenerCarrito(cliente);
             return ResponseEntity.ok(mapToDTO(pedido));
         } catch (Exception e) {
+            // Si el carrito está vacío, devuelve 204 No Content
             return ResponseEntity.noContent().build();
         }
     }

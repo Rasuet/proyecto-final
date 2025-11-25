@@ -15,12 +15,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
     Optional<Pedido> findByClienteAndEstado(Cliente cliente, String estado);
 
-    /**
-     * CORRECCIÓN CRÍTICA: Añadido 'DISTINCT'.
-     * Esto asegura que si el pedido tiene 5 líneas, JPA no devuelva 5 filas repetidas del pedido,
-     * sino un solo objeto Pedido con la lista de 5 líneas dentro.
-     * Esto evita que se sobrescriban o pierdan datos al guardar.
-     */
+
     @Query("SELECT DISTINCT p FROM Pedido p " +
             "LEFT JOIN FETCH p.lineasPedido lp " +
             "LEFT JOIN FETCH lp.producto " +

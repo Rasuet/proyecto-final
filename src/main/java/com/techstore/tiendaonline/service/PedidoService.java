@@ -79,7 +79,6 @@ public class PedidoService {
                 .orElse(carrito);
     }
 
-    // Usamos el método FETCH para leer el carrito
     public Pedido obtenerCarrito(Cliente cliente) {
         return pedidoRepository.findByClienteAndEstadoWithLineas(cliente, "ACTIVO")
                 .orElseThrow(() -> new IllegalArgumentException("Tu carrito está vacío (Técnicamente no existe)."));

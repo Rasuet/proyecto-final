@@ -26,8 +26,6 @@ public class DataInitializer {
         return args -> {
             // 1. CREAR PRODUCTOS (Si no existen)
             if (productoRepository.count() == 0) {
-                // NOTA: Asegúrate de que en C:/imagenes_tienda/ los archivos se llamen:
-                // laptop.avif, phone.avif, headset.avif
                 productoRepository.save(new Producto("Laptop Gamer", "Potente laptop para juegos.", new BigDecimal("1200.00"), 10, "/images/laptop.avif"));
                 productoRepository.save(new Producto("Smartphone Pro", "Teléfono última generación.", new BigDecimal("800.00"), 20, "/images/phone.avif"));
                 productoRepository.save(new Producto("Auriculares", "Cancelación de ruido.", new BigDecimal("150.00"), 50, "/images/headset.avif"));

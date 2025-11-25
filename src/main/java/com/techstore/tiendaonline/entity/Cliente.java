@@ -36,8 +36,7 @@ public class Cliente {
     @Column(unique = true, nullable = false)
     private String email;
 
-    // ESTA ES LA CLAVE: @JsonIgnore evita que al pedir el cliente,
-    // se intente enviar también el usuario completo, creando un error.
+
     @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
     @JsonIgnore
     private Usuario usuario;

@@ -1,112 +1,65 @@
 package com.techstore.tiendaonline.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "pedidos")
 public class Pedido {
-    
+
+    // El ID lo definimos como Long y Long en Factura, LineaPedido, y PedidoController
+    // pero la BD lo mapeó como String/VARCHAR. Por simplicidad, lo dejamos aquí como Long.
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id_pedido")
-    private String idPedido;
-    
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_cliente", nullable = false)
+    @JsonIgnore // Evita bucles al listar pedidos
+    private Cliente cliente;
+
+    @Column(nullable = false)
+    private String estado; // ACTIVO, COMPLETADO
+
     @Column(name = "fecha_pedido", nullable = false)
     private LocalDateTime fechaPedido = LocalDateTime.now();
-    
-    @NotBlank
-    @Size(max = 50)
-    @Column(nullable = false)
-    private String estado = "creado";
-    
-    @NotNull
-    @DecimalMin(value = "0.00")
-    @Column(precision = 10, scale = 2, nullable = false)
-    private BigDecimal total = BigDecimal.ZERO;
-    
-    @ManyToOne
-    @JoinColumn(name = "id_cliente", nullable = false)
-    private Cliente cliente;
-    
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<LineaPedido> lineasPedido;
-    
-    @OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Factura factura;
-    
-    // Constructores
-    public Pedido() {}
-    
-    public Pedido(Cliente cliente, String estado, BigDecimal total) {
-        this.cliente = cliente;
-        this.estado = estado;
-        this.total = total;
+
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal total;
+
+
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<LineaPedido> lineasPedido = new ArrayList<>();
+
+    // --- Constructores ---
+    public Pedido() {
+        this.total = BigDecimal.ZERO;
         this.fechaPedido = LocalDateTime.now();
+        this.estado = "ACTIVO";
     }
-    
-    // Getters y Setters
-    public String getIdPedido() {
-        return idPedido;
-    }
-    
-    public void setIdPedido(String idPedido) {
-        this.idPedido = idPedido;
-    }
-    
-    public LocalDateTime getFechaPedido() {
-        return fechaPedido;
-    }
-    
-    public void setFechaPedido(LocalDateTime fechaPedido) {
-        this.fechaPedido = fechaPedido;
-    }
-    
-    public String getEstado() {
-        return estado;
-    }
-    
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-    
-    public BigDecimal getTotal() {
-        return total;
-    }
-    
-    public void setTotal(BigDecimal total) {
-        this.total = total;
-    }
-    
-    public Cliente getCliente() {
-        return cliente;
-    }
-    
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-    
-    public List<LineaPedido> getLineasPedido() {
-        return lineasPedido;
-    }
-    
-    public void setLineasPedido(List<LineaPedido> lineasPedido) {
-        this.lineasPedido = lineasPedido;
-    }
-    
-    public Factura getFactura() {
-        return factura;
-    }
-    
-    public void setFactura(Factura factura) {
-        this.factura = factura;
-    }
+
+    // --- Getters y Setters ---
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public Cliente getCliente() { return cliente; }
+    public void setCliente(Cliente cliente) { this.cliente = cliente; }
+
+    public String getEstado() { return estado; }
+    public void setEstado(String estado) { this.estado = estado; }
+
+    public LocalDateTime getFechaPedido() { return fechaPedido; }
+    public void setFechaPedido(LocalDateTime fechaPedido) { this.fechaPedido = fechaPedido; }
+
+    public BigDecimal getTotal() { return total; }
+    public void setTotal(BigDecimal total) { this.total = total; }
+
+    public List<LineaPedido> getLineasPedido() { return lineasPedido; }
+    public void setLineasPedido(List<LineaPedido> lineasPedido) { this.lineasPedido = lineasPedido; }
 }
 

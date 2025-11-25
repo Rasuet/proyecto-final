@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="06134fa9-b7f8-4f54-ba4e-2a171a54f46b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/controller/ProductoController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/dto/UpdateClienteRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/service/ClienteService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/config/DataInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/config/DataInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/config/WebMvcSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/config/WebMvcConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/config/WebMvcConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/controller/ClienteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/controller/ClienteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/controller/FacturaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/controller/FacturaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/controller/LoginController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/controller/PedidoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/controller/PedidoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/dto/LineaPedidoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/dto/LineaPedidoDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/dto/PedidoResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/dto/PedidoResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/entity/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/entity/Cliente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/entity/Factura.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/entity/Factura.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/entity/LineaPedido.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/entity/LineaPedido.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/entity/Pedido.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/entity/Pedido.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/entity/Producto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/entity/Producto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/entity/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/entity/Usuario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/repository/FacturaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/repository/FacturaRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/repository/PedidoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/repository/PedidoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/repository/UsuarioRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/repository/UsuarioRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/service/PedidoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/service/PedidoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/config/DataInitializer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/config/DataInitializer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/config/SecurityConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/config/WebMvcConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/config/WebMvcConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/config/WebSecurityConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/controller/FacturaController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/controller/FacturaController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/controller/LoginController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/controller/PedidoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/controller/PedidoController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/controller/ProductoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/controller/ProductoController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/dto/UpdateClienteRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/dto/UpdateClienteRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/entity/Cliente.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/entity/Cliente.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/entity/Factura.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/entity/Factura.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/entity/LineaPedido.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/entity/LineaPedido.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/entity/Pedido.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/entity/Pedido.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/entity/Producto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/entity/Producto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/entity/Usuario.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/entity/Usuario.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/repository/FacturaRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/repository/FacturaRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/repository/PedidoRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/repository/PedidoRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/repository/UsuarioRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/repository/UsuarioRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/service/AuthenticationService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/service/ClienteService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/service/ClienteService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/service/PedidoService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/service/PedidoService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/techstore/tiendaonline/service/ProductoService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/index.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Rasuet&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Rasuet/proyecto-final.git&quot;,
+    &quot;accountId&quot;: &quot;f1331768-0864-47ed-8f44-6a04a9d5e344&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="35vTYyns3C2L0jPk3ggLkdsFhc9" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.TiendaOnlineApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.tienda-online [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.tienda-online [install].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.techstore.tiendaonline.controller" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Usuario\IdeaProjects\proyecto-finalprueba\src\main\java\com\techstore\tiendaonline\service" />
+    </key>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="06134fa9-b7f8-4f54-ba4e-2a171a54f46b" name="Changes" comment="" />
+      <created>1763989597850</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1763989597850</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/techstore/tiendaonline/controller/AuthController.java</url>
+          <line>77</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
+  </component>
+</project>

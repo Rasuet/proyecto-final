@@ -3,7 +3,7 @@ package com.techstore.tiendaonline.entity;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import com.fasterxml.jackson.annotation.JsonIgnore; // <--- Importar
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "facturas")
@@ -20,9 +20,10 @@ public class Factura {
     private BigDecimal total;
 
     // Relación 1:1 con Pedido.
+    // Usamos JoinColumn para especificar la columna de la clave foránea
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_pedido", unique = true, nullable = false)
-    @JsonIgnore // <--- CRÍTICO: Evita bucle infinito al enviar a Frontend
+    @JsonIgnore
     private Pedido pedido;
 
     // --- Constructores ---
@@ -31,6 +32,11 @@ public class Factura {
         this.fechaEmision = LocalDateTime.now();
     }
 
+    /**
+     * Constructor usado para crear la factura a partir del pedido confirmado.
+     * @param pedido El pedido ya guardado.
+     * @param total El total del pedido.
+     */
     public Factura(Pedido pedido, BigDecimal total) {
         this();
         this.pedido = pedido;

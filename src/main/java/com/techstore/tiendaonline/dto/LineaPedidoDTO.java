@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 /**
  * DTO para transportar los datos de una línea de pedido de forma plana.
- * Necesario para que PedidoResponse compile.
  */
 public class LineaPedidoDTO {
 

@@ -14,10 +14,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     boolean existsByUsername(String username);
 
-    /**
-     * ESTA ES LA CLAVE: Trae al Usuario Y sus datos de Cliente juntos.
-     * Sin esto, la aplicación falla al intentar leer el perfil.
-     */
+
     @Query("SELECT u FROM Usuario u JOIN FETCH u.cliente WHERE u.username = :username")
     Optional<Usuario> findByUsernameWithCliente(String username);
 }

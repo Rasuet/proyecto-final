@@ -10,7 +10,7 @@ public class PedidoResponse {
     private LocalDateTime fechaPedido;
     private String estado;
     private BigDecimal total;
-    // IMPORTANTE: El nombre 'lineasPedido' debe coincidir con lo que busca el index.html
+
     private List<LineaPedidoDTO> lineasPedido;
 
     public PedidoResponse() {}

@@ -40,21 +40,21 @@ public class AuthController {
             if (passwordEncoder.matches(rawPassword, usuario.getPassword())) {
 
                 // 2. CRÍTICO: Informar a Spring Security de que el usuario está autenticado
-                // Creamos un token oficial con el rol del usuario
+
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         username,
                         null,
                         Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + usuario.getRole()))
                 );
 
-                // 3. Establecemos la autenticación en el contexto de seguridad
+                // 3. Establezco la autenticación en el contexto de seguridad
                 SecurityContext sc = SecurityContextHolder.getContext();
                 sc.setAuthentication(authToken);
 
-                // 4. Guardamos el contexto de seguridad en la sesión HTTP para que persista entre peticiones
+                // 4. Guardo el contexto de seguridad en la sesión HTTP para que persista entre peticiones
                 session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, sc);
 
-                // 5. Guardamos también nuestro objeto usuario para uso fácil (opcional pero útil)
+                // 5. Guardo también objeto usuario para uso fácil (opcional pero útil)
                 session.setAttribute("user", usuario);
 
                 Map<String, Object> response = new HashMap<>();
@@ -69,11 +69,11 @@ public class AuthController {
 
     @GetMapping("/session")
     public ResponseEntity<?> checkSession(HttpSession session) {
-        // Verificamos si Spring Security reconoce al usuario
+        // Verifico si Spring Security reconoce al usuario
         SecurityContext sc = (SecurityContext) session.getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
 
         if (sc != null && sc.getAuthentication() != null && sc.getAuthentication().isAuthenticated()) {
-            // Recuperamos nuestro objeto usuario para enviarlo al front
+            // Recupero objeto usuario para enviarlo al front
             Usuario usuario = (Usuario) session.getAttribute("user");
             Map<String, Object> response = new HashMap<>();
             response.put("authenticated", true);
